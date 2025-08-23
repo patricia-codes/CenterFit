@@ -83,10 +83,10 @@ http://127.0.0.1:8000/
 Este projeto foi desenvolvido em grupo como parte do curso do SENAC – Python II - Desenvolvendo Aplicações Web.
 Integrantes:
 
-Patrícia Rocha
-Laís
-Fabiano Reis
-André Manteiga
+Patrícia de Oliveira da Silva Rocha,
+Laís Regina de Oliveira Silva,
+Fabiano Reis Touro,
+André Manteiga de Souza.
 
 📜 Licença
 
