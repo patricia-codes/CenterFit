@@ -1,0 +1,48 @@
+.brands {
+  display: flex;
+  justify-content: space-around;
+  padding: 5px;
+}
+
+/* Hover nos cards */
+.fade-in-item .card {
+  transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
+}
+.fade-in-item .card:hover {
+  transform: scale(1.03);
+  border-color: #6610f2;
+  box-shadow: 0 0.5rem 1rem rgba(0,0,0,0.15);
+}
+
+.navbar-custom {
+  background-color: #0b1c45;
+}
+.navbar-custom .nav-link,
+.navbar-custom .navbar-brand,
+.navbar-custom .bi {
+  color: white;
+  font-size: 17px;
+}
+.search-bar input {
+  border-radius: 10px 0 0 10px;
+  width: 650px;
+  height: 50px;
+}
+.search-bar button {
+  border-radius: 0 10px 10px 0;
+}
+
+@media (min-width: 992px){
+  .navbar .dropdown-hover:hover .dropdown-menu {
+    display: block;
+  }
+  .search-bar input {
+    margin-left: 2.5em; 
+  }
+}
+
+@media (max-width: 992px){
+  .search-bar input {
+    width: 100%; 
+  }
+}

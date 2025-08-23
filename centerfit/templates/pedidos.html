@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Carrinho{% endblock %}
+{% block conteudo %}
+<div class="container mt-4">
+  <h2>Meus Pedidos</h2>
+
+  {% if pedidos %}
+    {% for compra in pedidos %}
+      <div class="card mb-4 shadow-sm">
+        <div class="card-header bg-light d-flex justify-content-between align-items-center">
+          <div>
+            <strong>Pedido #{{ compra.id }}</strong>  
+            <span class="text-muted">({{ compra.criado_em|date:"d/m/Y H:i" }})</span>
+          </div>
+          <a href="{% url 'detalhes_pedido' compra.id %}" class="btn btn-sm btn-outline-primary">
+            Ver detalhes
+          </a>
+        </div>
+        <div class="card-body">
+          <p><strong>Endereço:</strong> {{ compra.endereco }}</p>
+          <p><strong>Forma de pagamento:</strong> {{ compra.get_pagamento_display }}</p>
+          <p><strong>Total:</strong> R$ {{ compra.total }}</p>
+
+          <h6>Itens:</h6>
+          <ul class="list-group list-group-flush">
+            {% for item in compra.itens.all %}
+              <li class="list-group-item d-flex justify-content-between align-items-center">
+                <div>
+                  <img src="{{ item.produto.imagem.url }}" width="50" class="rounded me-2">
+                  {{ item.produto.nome }}  
+                  {% if item.tamanho %}
+                    <span class="badge bg-secondary">{{ item.tamanho }}</span>
+                  {% endif %}
+                  {% if item.cor %}
+                    <span class="badge" style="background-color: {{ item.cor.hex }};">&nbsp;&nbsp;</span>
+                  {% endif %}
+                </div>
+                <div>
+                  {{ item.quantidade }}x — R$ {{ item.preco_unitario }}
+                </div>
+              </li>
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+    {% endfor %}
+  {% else %}
+    <div class="alert alert-info mt-3">
+      Você ainda não fez nenhum pedido.
+    </div>
+  {% endif %}
+</div>
+{% endblock %}

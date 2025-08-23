@@ -1,0 +1,208 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}{% endblock %}</title>
+    <link href="{% static 'style.css' %}" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-custom navbar-dark">
+      <div class="container-fluid py-1 mx-4">
+        <!-- Logo -->
+        <a class="navbar-brand" href="/">
+          <img src="{% static 'logo.png' %}" alt="Logo" height="50">
+        </a>
+
+        <!-- Hamburguer pra mobile -->
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent">
+          <span class="navbar-light navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse justify-content-around" id="navbarContent">
+          <!-- Barra de Pesquisa -->
+          <form class="d-flex search-bar" role="search" action="{% url 'buscar' %}" method="GET">
+            <input class="form-control" name="termo" type="text" placeholder="O que você está procurando?"
+              name="q" value="{{ termo|default:'' }}">
+            <button class="btn btn-light" type="submit"><i class="bi bi-search" style = "color:black;"></i></button>
+          </form>
+
+          <!-- Icones -->
+          {% if user.is_authenticated %}
+          <ul class="navbar-nav">
+            <li class="nav-item" style="margin-right: 10px;">
+              <div class="dropdown">
+                <button class="btn btn-custom dropdown-toggle" type="button" data-bs-toggle="dropdown" style="background-color: #0b1c45; color: white; font-size: 17px; padding-top: 8px">
+                  {% if user.is_staff %}{{ user.username }}
+                  {% else %}{{ user.first_name }}{% endif %}
+                </button>
+                <ul class="dropdown-menu">
+                  <li><a class="dropdown-item" href="{% url 'pedidos' %}">Pedidos</a></li>
+                  <li><a class="dropdown-item" href="{% url 'perfil' %}">Perfil</a></li>
+                  <li><a class="dropdown-item" href="{% url 'logout' %}">Sair</a></li>
+                </ul>
+              </div>
+            </li>
+            <li class="nav-item dropdown" style="margin-right: 10px;"">
+              <a class="nav-link" href="{% url 'carrinho' %}"><i class="bi bi-cart"></i> Carrinho
+              </a>
+            </li>
+          </ul>
+          {% else %}
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'login' %}" data-bs-toggle="modal" data-bs-target="#loginModal"><i class="bi bi-person"></i> Entre ou Cadastre-se</a>
+            </li>
+            <li class="nav-item" style="margin-right: 10px;"">
+              <a class="nav-link" href="{% url 'login' %}" data-bs-toggle="modal" data-bs-target="#loginModal"><i class="bi bi-cart"></i> Carrinho</a>
+            </li>
+          </ul>
+        {% endif %}
+        </div>
+      </div>
+    </nav>
+    {% block nav %}
+    <nav class="navbar navbar-expand-lg navbar-light" style="border-bottom: 1px solid grey; padding:0;">
+      <div class="container-fluid">
+        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+          <ul class="navbar-nav w-100 justify-content-evenly">
+            <!-- Masculino -->
+            <li class="nav-item dropdown dropdown-hover">
+              <a class="nav-link" href="{% url 'produtos' %}?categoria=Masculino" style="color: black;">
+                <strong>Masculino</strong>
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="servicesDropdown">
+                <li><a class="dropdown-item" href="{% url 'produtos' %}?categoria=Masculino&categoria=Calças">Calças</a></li>
+                <li><a class="dropdown-item" href="{% url 'produtos' %}?categoria=Masculino&categoria=Camisas">Camisas</a></li>
+                <li><a class="dropdown-item" href="{% url 'produtos' %}?categoria=Masculino&categoria=Tênis">Tênis</a></li>
+              </ul>
+            </li>
+            <!-- Feminino -->
+            <li class="nav-item dropdown dropdown-hover">
+              <a class="nav-link" href="{% url 'produtos' %}?categoria=Feminino" style="color: black;">
+                <strong>Feminino</strong>
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="aboutDropdown">
+                <li><a class="dropdown-item" href="{% url 'produtos' %}?categoria=Feminino&categoria=Calças">Calças</a></li>
+                <li><a class="dropdown-item" href="{% url 'produtos' %}?categoria=Feminino&categoria=Camisas">Camisas</a></li>
+                <li><a class="dropdown-item" href="{% url 'produtos' %}?categoria=Feminino&categoria=Tênis">Tênis</a></li>
+              </ul>
+            </li>
+            <!-- Esportes -->
+            <li class="nav-item dropdown dropdown-hover">
+              <a class="nav-link" href="{% url 'produtos' %}categoria=Esporte" style="color: black;">
+                <strong>Esportes</strong>
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="aboutDropdown">
+                <li><a class="dropdown-item" href="{% url 'produtos' %}?categoria=Esportes&categoria=Futebol">Futebol</a></li>
+                <li><a class="dropdown-item" href="{% url 'produtos' %}?categoria=Esportes&categoria=Basquete">Basquete</a></li>
+                <li><a class="dropdown-item" href="{% url 'produtos' %}?categoria=Esportes&categoria=Academia">Academia</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    {% endblock %}
+    {% block conteudo %}{% endblock %}
+    <!-- Login -->
+    <div class="modal fade" id="loginModal" tabindex="-1">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <form id="loginForm">
+            {% csrf_token %}
+            <div class="modal-header">
+              <h5 class="modal-title" id="loginModalLabel">Login</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+              <div id="loginError" class="alert alert-danger d-none"></div>
+              <div class="mb-3">
+                <label for="username" class="form-label">E-Mail:</label>
+                <input type="text" class="form-control" id="username" name="username" required>
+              </div>
+              <div class="mb-3">
+                <label for="password" class="form-label">Senha:</label>
+                <input type="password" class="form-control" id="password" name="password" required>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="submit" class="btn btn-dark w-100">Entrar</button>
+              <div class="container" >
+                <p>Não tem uma conta? <a href="{% url 'cadastro' %}">Cadastre-se</a></p>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <!-- Rodapé -->
+    <footer class="navbar-custom text-light pt-3 pb-2">
+      <div class="container">
+          <div class="row">
+              <div class="col-md-4">
+                  <h5>Atendimento</h5>
+                  <p>Segunda a Sábado: 9h às 18h</p>
+                  <p>contato@centerfit.com.br</p>
+              </div>
+              <div class="col-md-4">
+                  <h5>Institucional</h5>
+                  <ul class="list-unstyled">
+                      <li><a href="{% url 'sobre' %}" class="text-light">Sobre Nós</a></li>
+                      <li><a href="{% url 'privacidade' %}" class="text-light">Política de Privacidade</a></li>
+                      <li><a href="{% url 'trocas' %}" class="text-light">Trocas e Devoluções</a></li>
+                      <li><a href="{% url 'contato' %}" class="text-light">Contato</a></li>
+                  </ul>
+              </div>
+              <div class="col-md-4">
+                <h5>Newsletter</h5>
+                <p>Receba nossas novidades e promoções!</p>
+                <div class="input-group">
+                    <input type="email" class="form-control" placeholder="Seu e-mail" id="email-newsletter">
+                    <button onclick="mostrarMensagem()" class="btn btn-dark">Cadastrar</button>
+                </div>
+                <p id="mensagem" style="color: lightgreen; font-weight: bold; display: none; margin-top: 10px;">
+                  Obrigado por se inscrever na nossa newsletter!
+                </p>
+              </div>
+          </div>
+      </div>
+    </footer>
+    <script>
+        function mostrarMensagem() {
+        const emailInput = document.getElementById('email-newsletter');
+        const mensagem = document.getElementById('mensagem');
+        if (emailInput.value.trim() !== "") {
+          mensagem.style.display = 'block';
+        }
+      }
+      document.getElementById('loginForm').addEventListener('submit', function(e) {
+          e.preventDefault();
+          const formData = new FormData(this);
+
+          fetch("{% url 'login' %}", {
+              method: "POST",
+              body: formData,
+              headers: {
+                  "X-CSRFToken": "{{ csrf_token }}",
+              }
+          })
+          .then(response => response.json())
+          .then(data => {
+              const errorDiv = document.getElementById('loginError');
+              if (data.success) {
+                  location.reload();
+              } else {
+                  errorDiv.textContent = data.error;
+                  errorDiv.classList.remove('d-none');
+              }
+          })
+          .catch(error => console.error('Error:', error));
+      });
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>

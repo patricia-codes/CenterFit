@@ -1,0 +1,120 @@
+{% extends "base.html" %}
+{% block title %}Perfil{% endblock %}
+{% block conteudo %}
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <div class="card shadow-sm my-4 pt-1">
+        <div class="card-body">
+          <h3 class="card-title mb-3 text-center">Seu Perfil</h3>
+            {% if messages %}
+                {% for message in messages %}
+                  <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                    {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                  </div>
+                {% endfor %}
+              {% endif %}
+            {% if form.errors %}
+                <div class="alert alert-danger">
+                {% for errors in form.errors.items %}
+                    {% for error in errors %}
+                        <p>{{ error }}</p>
+                    {% endfor %}
+                {% endfor %}
+                </div>
+            {% endif %}
+          <form method="POST">
+            {% csrf_token %}
+            <!-- Email -->
+            <div class="mb-3">
+                {{ form.email.label_tag }}
+                {{ form.email }}
+            </div>
+            <!-- Nome -->
+            <div class="mb-3">
+                {{ form.first_name.label_tag }}
+                {{ form.first_name }}
+            </div>
+            <!-- Sobrenome -->
+            <div class="mb-3">
+                {{ form.last_name.label_tag }}
+                {{ form.last_name }}
+            </div>
+            <!-- CPF -->
+            <div class="mb-3">
+              <label for="cpf">CPF</label>
+              {{ form.cpf }}
+            </div>
+            <!-- Password1 -->
+            <div class="mb-3">
+                {{ form.password1.label_tag }}
+                {{ form.password1 }}
+            </div>
+            <!-- Password2 -->
+            <div class="mb-3">
+                {{ form.password2.label_tag }}
+                {{ form.password2 }}
+            </div>
+            <button type="submit" class="btn btn-dark">Alterar</button>
+              <button type="submit" name="delete_account" class="btn btn-danger" 
+                  data-bs-toggle="modal" data-bs-target="#deleteModal">
+                Excluir
+              </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal de exclusão -->
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="deleteModalLabel">Confirmar Exclusão</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+      </div>
+      <div class="modal-body">
+        Tem certeza que deseja deletar sua conta? Esta ação não pode ser desfeita.
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+        <form method="post" style="display:inline;">
+          {% csrf_token %}
+          <button type="submit" name="delete_account" class="btn btn-danger">Sim, deletar</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Máscara p CPF -->
+<script>
+function setInputMask(input, mask) {
+    input.addEventListener('input', () => {
+        let value = input.value.replace(/\D/g, '');
+        let newValue = '';
+        let i = 0;
+
+        for (let m of mask) {
+            if (m === '_') {
+                if (i < value.length) {
+                    newValue += value[i];
+                    i++;
+                } else {
+                    break;
+                }
+            } else {
+                newValue += m;
+            }
+        }
+
+        input.value = newValue;
+    });
+}
+const cpfInput = document.getElementById('cpf');
+setInputMask(cpfInput, '___.___.___-__');
+</script>
+{% endblock %}

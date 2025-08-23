@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}CenterFit{% endblock %}
+{% block conteudo %}
+<div class="container my-4" ">
+  <div class="row" >
+    {% if produtos %}
+    <h1 class="mb-4 ">Produtos</h1>
+    {% for produto in produtos %}
+    <div class="col-6 col-md-4 col-lg-3 mb-4 fade-in-item">
+    <!-- Cards -->
+      <a href="{% url 'produto' produto.slug %}" class="text-decoration-none text-dark">
+        <div class="card h-100 border transition-card" style="overflow: hidden;">
+
+          <!-- Imagem do produto -->
+          {% if produto.imagens.all %}
+            <div class="card-img-top position-relative">
+              <img src="{{ produto.imagens.first.imagem.url }}"  
+                   alt="{{ produto.nome }}" 
+                   class="img-fluid img-hover-swap"
+                   style="width: 100%; height: 250px; object-fit: cover;">
+            </div>
+          {% else %}
+            <div class="bg-light d-flex align-items-center justify-content-center" style="height: 200px;">
+              Sem imagem
+            </div>
+          {% endif %}
+
+          <!-- Conteúdo do card -->
+          <div class="card-body">
+            <h5 class="card-title text-truncate">{{ produto.nome }}</h5>
+
+            <!-- Preço -->
+            <p class="text-primary fw-bold" style="font-size: 1.4em; margin-bottom: 0">${{ produto.preco|floatformat:2 }}</p>
+          </div>
+        </div>
+      </a>
+    </div>
+    {% endfor %}
+    {% else %}
+    <div class="container my-3" style="text-align: center">
+      <br><h2>Nenhum produto encontrado</h2><br>
+    </div>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

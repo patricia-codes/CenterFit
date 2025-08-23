@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Checkout{% endblock %}
+{% block nav %}{% endblock %}
+{% block conteudo %}
+<div class="container my-4">
+  <h2>Pedido #{{ pedido.id }}</h2>
+  <p><strong>Data:</strong> {{ pedido.criado_em|date:"d/m/Y H:i" }}</p>
+  <p><strong>Endereço:</strong> {{ pedido.endereco }}</p>
+  <p><strong>Forma de pagamento:</strong> {{ pedido.get_pagamento_display }}</p>
+
+  <h4>Itens:</h4>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Produto</th>
+        <th>Qtd</th>
+        <th>Preço Unitário</th>
+        <th>Subtotal</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for item in pedido.itens.all %}
+      <tr>
+        <td>{{ item.produto.nome }}</td>
+        <td>{{ item.quantidade }}</td>
+        <td>R$ {{ item.preco_unitario }}</td>
+        <td>R$ {{ item.subtotal }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  <h4 class="text-end">Total: R$ {{ pedido.total }}</h4>
+</div>
+{% endblock %}
