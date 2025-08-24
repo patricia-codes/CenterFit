@@ -2,7 +2,7 @@
 
 CenterFit é um projeto de loja virtual de roupas esportivas desenvolvido em grupo durante o curso Python II – Desenvolvendo Aplicações Web (SENAC).
 
-O objetivo do projeto é aplicar os conceitos de Django, HTML, CSS e banco de dados SQLite, criando uma aplicação web funcional e escalável.
+O objetivo do projeto é aplicar os conceitos de Python, Django, HTML, CSS e banco de dados SQLite, criando uma aplicação web funcional e escalável.
 
 Tecnologias utilizadas
 
