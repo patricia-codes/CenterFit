@@ -18,6 +18,8 @@ SQLite
 HTML5 & CSS3
  🎨
 
+ JavaScript
+
 Replit
  💻
 
@@ -74,18 +76,15 @@ Inicie o servidor:
 python manage.py runserver
 
 
-Acesse no navegador:
-
-http://127.0.0.1:8000/
-
 👩‍💻 Autores
 
 Este projeto foi desenvolvido em grupo como parte do curso do SENAC – Python II - Desenvolvendo Aplicações Web.
+
 Integrantes:
 
 Patrícia de Oliveira da Silva Rocha,
 Laís Regina de Oliveira Silva,
-Fabiano Reis Touro,
+Fabiano Reis Touro e 
 André Manteiga de Souza.
 
 📜 Licença
