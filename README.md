@@ -16,24 +16,33 @@ O projeto aplica conceitos de **Python, Django, HTML, CSS e SQLite**, criando um
 
 ---
 
-## ⚙️ Funcionalidades
+## ⚙️ Tecnologias Utilizadas
+- Python 🐍  
+- Django 🌐  
+- SQLite 🗄️  
+- HTML5 & CSS3 🎨  
+- JavaScript 💻  
+- Replit 💡  
 
-✅ Cadastro e gerenciamento de **produtos**  
-✅ Cadastro de **marcas**  
-✅ Visualização dos itens disponíveis na loja  
-✅ Estrutura inicial de **e-commerce (frontend + backend)**  
-✅ Banco de dados integrado com **SQLite**  
+---
+
+## ✨ Funcionalidades
+- ✅ Cadastro e gerenciamento de produtos  
+- ✅ Cadastro de marcas  
+- ✅ Visualização dos itens disponíveis  
+- ✅ Estrutura inicial de e-commerce (frontend + backend)  
+- ✅ Banco de dados integrado com SQLite  
 
 ---
 
 ## 📂 Estrutura do Projeto
-
 ```bash
 CenterFit/
 │── centerfit/         # Aplicação principal
 │── django_project/    # Configuração do projeto Django
 │── marcas/            # App para cadastro de marcas
 │── produtos/          # App para cadastro de produtos
+│── screenshots/       # Prints das páginas do projeto
 │── db.sqlite3         # Banco de dados SQLite
 │── manage.py          # Comando principal do Django
 │── README.md          # Documentação do projeto
