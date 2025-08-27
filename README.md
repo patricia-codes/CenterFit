@@ -42,7 +42,7 @@ CenterFit/
 │── django_project/    # Configuração do projeto Django
 │── marcas/            # App para cadastro de marcas
 │── produtos/          # App para cadastro de produtos
-│── screenshots/       # Prints das páginas do projeto
+│── screenshots/       # Print da página inicial do projeto
 │── db.sqlite3         # Banco de dados SQLite
 │── manage.py          # Comando principal do Django
 │── README.md          # Documentação do projeto
